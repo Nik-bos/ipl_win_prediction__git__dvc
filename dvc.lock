@@ -1,0 +1,22 @@
+schema: '2.0'
+stages:
+  load_data:
+    cmd: python src/load_data.py --config params.yaml
+    deps:
+    - path: original_data/ipl_dataset.csv
+      hash: md5
+      md5: 93fa118986a7b380d56bcf3e05c7a8a0
+      size: 8220218
+    - path: src/load_data.py
+      hash: md5
+      md5: 1fda9a9a4ef459f3e85186eec00ac27d
+      size: 829
+    - path: src/read_data.py
+      hash: md5
+      md5: 53ce203dd337e117104cdf9e7c4e9448
+      size: 1016
+    outs:
+    - path: data/raw/raw_ipl_dataset.csv
+      hash: md5
+      md5: 93fa118986a7b380d56bcf3e05c7a8a0
+      size: 8220218

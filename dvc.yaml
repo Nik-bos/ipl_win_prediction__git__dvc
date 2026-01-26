@@ -1,0 +1,9 @@
+stages:
+    load_data:
+        cmd: python src/load_data.py --config params.yaml
+        deps:
+            - src/load_data.py
+            - src/read_data.py
+            - original_data/ipl_dataset.csv
+        outs:
+            - data/raw/raw_ipl_dataset.csv
