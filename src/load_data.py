@@ -10,7 +10,7 @@ def load_and_save_data(config):
 
     # Save to data/raw
     raw_data_path = yaml_data["load_data"]['raw_dataset_path']
-    df.to_csv(raw_data_path)
+    df.to_csv(raw_data_path, index = False)
     print(f"Raw dataset saved to -> {raw_data_path}")
     print(f"Shape: {df.shape}")
 
