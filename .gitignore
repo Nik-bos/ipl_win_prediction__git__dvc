@@ -1,0 +1,5 @@
+# ignore whole notebooks folder
+notebooks/
+
+# Original dataset
+original_data/
