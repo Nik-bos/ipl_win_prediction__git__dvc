@@ -2,4 +2,10 @@
 notebooks/
 
 # Original dataset
-original_data/
+original_data/ipl_dataset.csv
+
+# But keep the pointer file
+!original_data/ipl_dataset.csv.dvc
+
+# ignoring temp file
+~$ Ipl_win_prediction initial git and dvc commands.docx
