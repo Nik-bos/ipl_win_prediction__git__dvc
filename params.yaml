@@ -1,0 +1,18 @@
+base:
+    project_name: ipl_win_prediction_using_git_dvc    # Project name
+    random_state: 1    # Random state
+    target_column: results    # Target column
+
+data_source:
+    original_data_path: original_data/ipl_dataset.csv
+
+load_data:
+    raw_dataset_path: data/raw/raw_ipl_dataset.csv
+
+processed_data:
+    processed_data_path: data/processed
+
+split_data:
+    train_data_path: data/processed/train_data.csv
+    test_data_path: data/processed/test_data.csv
+    test_size: 0.2

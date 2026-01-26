@@ -7,5 +7,14 @@ original_data/ipl_dataset.csv
 # But keep the pointer file
 !original_data/ipl_dataset.csv.dvc
 
-# ignoring temp file
-~$ Ipl_win_prediction initial git and dvc commands.docx
+# Ignore only Word temporary lock files
+~$*.docx
+
+# Ignore Word temp files
+~WRL*.tmp
+
+
+
+# Python cache / compiled files
+__pycache__/
+*.pyc
