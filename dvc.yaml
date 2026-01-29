@@ -7,3 +7,15 @@ stages:
             - original_data/ipl_dataset.csv
         outs:
             - data/raw/raw_ipl_dataset.csv
+
+    preprocess_data:
+        cmd: python src/preprocess.py --config params.yaml
+        deps:
+        - src/preprocess.py
+        - data/raw/raw_ipl_dataset.csv
+        outs:
+        - data/processed/ipl_preprocessor_pipeline.pkl
+        - data/processed/ipl_preprocessed.csv
+        params:
+            - pipeline.pipeline_path
+            - split_data.trans_data_path

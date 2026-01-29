@@ -9,8 +9,8 @@ stages:
       size: 8220218
     - path: src/load_data.py
       hash: md5
-      md5: 1fda9a9a4ef459f3e85186eec00ac27d
-      size: 829
+      md5: 04b7fae0c3a27261d7a924ba9a063ade
+      size: 844
     - path: src/read_data.py
       hash: md5
       md5: 53ce203dd337e117104cdf9e7c4e9448
@@ -18,5 +18,29 @@ stages:
     outs:
     - path: data/raw/raw_ipl_dataset.csv
       hash: md5
-      md5: 93fa118986a7b380d56bcf3e05c7a8a0
-      size: 8220218
+      md5: 69fa7c201df87246ac54137e64d62e38
+      size: 7585099
+  preprocess_data:
+    cmd: python src/preprocess.py --config params.yaml
+    deps:
+    - path: data/raw/raw_ipl_dataset.csv
+      hash: md5
+      md5: 69fa7c201df87246ac54137e64d62e38
+      size: 7585099
+    - path: src/preprocess.py
+      hash: md5
+      md5: d1abc7ef3fd10d67ddc322a24663f27d
+      size: 5704
+    params:
+      params.yaml:
+        pipeline.pipeline_path: data/processed/ipl_preprocessor_pipeline.pkl
+        split_data.trans_data_path: data/processed/ipl_preprocessed.csv
+    outs:
+    - path: data/processed/ipl_preprocessed.csv
+      hash: md5
+      md5: 0e9d9f353298c2fc97fad0f2f18b2e2f
+      size: 29647575
+    - path: data/processed/ipl_preprocessor_pipeline.pkl
+      hash: md5
+      md5: e69acb6fff4312cb87a95f629ccfd912
+      size: 8858
