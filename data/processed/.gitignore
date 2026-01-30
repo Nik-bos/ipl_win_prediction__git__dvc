@@ -1,2 +1,4 @@
 /ipl_preprocessor_pipeline.pkl
 /ipl_preprocessed.csv
+/ipl_train.csv
+/ipl_test.csv

@@ -19,3 +19,17 @@ stages:
         params:
             - pipeline.pipeline_path
             - split_data.trans_data_path
+
+    train_test_split:
+        cmd: python src/train_test_split.py --config params.yaml
+        deps:
+            - src/train_test_split.py
+            - src/read_data.py
+            - data/processed/ipl_preprocessed.csv
+        outs:
+            - data/processed/ipl_train.csv
+            - data/processed/ipl_test.csv
+        params:
+            - split_data.test_size
+            - base.target_column
+            - base.random_state

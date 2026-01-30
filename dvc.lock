@@ -44,3 +44,32 @@ stages:
       hash: md5
       md5: e69acb6fff4312cb87a95f629ccfd912
       size: 8858
+  train_test_split:
+    cmd: python src/train_test_split.py --config params.yaml
+    deps:
+    - path: data/processed/ipl_preprocessed.csv
+      hash: md5
+      md5: 0e9d9f353298c2fc97fad0f2f18b2e2f
+      size: 29647575
+    - path: src/read_data.py
+      hash: md5
+      md5: 53ce203dd337e117104cdf9e7c4e9448
+      size: 1016
+    - path: src/train_test_split.py
+      hash: md5
+      md5: 6dffbae80402a06922bfce4e9cbbe026
+      size: 1891
+    params:
+      params.yaml:
+        base.random_state: 1
+        base.target_column: results
+        split_data.test_size: 0.2
+    outs:
+    - path: data/processed/ipl_test.csv
+      hash: md5
+      md5: da165b470592f09ceba513351ef6c4f3
+      size: 5888173
+    - path: data/processed/ipl_train.csv
+      hash: md5
+      md5: 93338b91a2f329c52ff19c062dcfda99
+      size: 23549288
