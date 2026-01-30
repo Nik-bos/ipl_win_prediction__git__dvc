@@ -33,3 +33,18 @@ stages:
             - split_data.test_size
             - base.target_column
             - base.random_state
+
+    train_and_evaluate:
+        cmd: python src/train_and_evaluate.py --config params.yaml
+        deps:
+            - src/train_and_evaluate.py
+            - data/processed/ipl_train.csv
+            - data/processed/ipl_test.csv
+        params:
+            - base.active_model
+            - models
+        outs:
+            - reports/conf_matrix.csv
+            - reports/model_parameters.json
+            - reports/model_scores.json
+            - models/model.joblib

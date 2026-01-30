@@ -2,6 +2,7 @@ base:
     project_name: ipl_win_prediction_using_git_dvc    # Project name
     random_state: 1    # Random state
     target_column: results    # Target column
+    active_model: RandomForestClassifier
 
 data_source:
     original_data_path: original_data/ipl_dataset.csv
@@ -17,3 +18,22 @@ split_data:
     train_data_path: data/processed/ipl_train.csv
     test_data_path: data/processed/ipl_test.csv
     test_size: 0.2
+
+model_path:
+    models
+
+
+models:
+    RandomForestClassifier:
+        parameters:
+            n_estimators: 200
+    
+    DecisionTreeClassifier:
+
+reports:
+    # Path to save evaluation metrics
+    model_scores_path: reports/model_scores.json
+    # confusion matrix path
+    conf_matrix_path: reports/conf_matrix.csv
+    # Model parameters path
+    model_parameters_path: reports/model_parameters.json

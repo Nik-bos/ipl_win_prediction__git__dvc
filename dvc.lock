@@ -73,3 +73,43 @@ stages:
       hash: md5
       md5: 93338b91a2f329c52ff19c062dcfda99
       size: 23549288
+  train_and_evaluate:
+    cmd: python src/train_and_evaluate.py --config params.yaml
+    deps:
+    - path: data/processed/ipl_test.csv
+      hash: md5
+      md5: da165b470592f09ceba513351ef6c4f3
+      size: 5888173
+    - path: data/processed/ipl_train.csv
+      hash: md5
+      md5: 93338b91a2f329c52ff19c062dcfda99
+      size: 23549288
+    - path: src/train_and_evaluate.py
+      hash: md5
+      md5: 2b9f0661b53f4167d4b429b949901ffb
+      size: 6870
+    params:
+      params.yaml:
+        base.active_model: RandomForestClassifier
+        models:
+          RandomForestClassifier:
+            parameters:
+              n_estimators: 200
+          DecisionTreeClassifier:
+    outs:
+    - path: models/model.joblib
+      hash: md5
+      md5: 4456ab5649ab8adae85d810e2cc20918
+      size: 87918553
+    - path: reports/conf_matrix.csv
+      hash: md5
+      md5: 88f10df5c942f019280b220105bb6517
+      size: 61
+    - path: reports/model_parameters.json
+      hash: md5
+      md5: b27d233253c192891e7ca856c155c358
+      size: 665
+    - path: reports/model_scores.json
+      hash: md5
+      md5: 60cfcda73b53d14d15b4c979709bcb3d
+      size: 451
