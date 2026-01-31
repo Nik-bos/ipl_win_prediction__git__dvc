@@ -44,7 +44,11 @@ stages:
             - base.active_model
             - models
         outs:
-            - reports/conf_matrix.csv
-            - reports/model_parameters.json
-            - reports/model_scores.json
             - models/model.joblib
+        metrics:
+            - reports/model_parameters.json:
+                cache: false
+            - reports/model_scores.json:
+                cache: false
+            - reports/conf_matrix.csv:
+                cache: false
