@@ -1,3 +1,7 @@
+# TODO: Replace test-set threshold tuning with CV-based threshold selection
+# (Use StratifiedKFold on training data only — avoid test leakage)
+
+
 from read_data import read_yaml
 import os
 import joblib
