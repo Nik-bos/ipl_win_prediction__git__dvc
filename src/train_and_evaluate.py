@@ -92,6 +92,8 @@ def train_and_evaluate(config):
     
     # Adding random_state and n_jobs in parameters
     parameters['random_state'] = random_state
+    parameters['class_weight'] = 'balanced'
+
 
     # Getting the model class from model_map
     model_class = model_map.get(active_model)

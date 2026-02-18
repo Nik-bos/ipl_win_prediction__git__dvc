@@ -9,13 +9,16 @@ def split_and_save(config)->None:
     train_data_path = yaml_data['split_data']['train_data_path']
     test_data_path = yaml_data['split_data']['test_data_path']
     test_size = yaml_data['split_data']['test_size']
-    preprocessed_data_path = yaml_data['split_data']['trans_data_path']
+    raw_data_path = yaml_data['load_data']['raw_dataset_path']
+    raw_train_data_path = yaml_data['load_data']['raw_train_data']
+    raw_test_data_path = yaml_data['load_data']['raw_test_data']
+
     random_state = yaml_data['base']['random_state']
     target_column = yaml_data["base"]['target_column']
 
-    df = pd.read_csv(preprocessed_data_path)
-    print('Preprocessed data successfully loaded.')
-    print(f"Preprocessed data shape: {df.shape}")
+    df = pd.read_csv(raw_data_path)
+    print('Raw data successfully loaded.')
+    print(f"Raw data shape: {df.shape}")
     print("="*50)
 
     if target_column not in df.columns:
@@ -44,8 +47,8 @@ Test data class distribution:
     print("="*50)
 
     # Save train and test data
-    train.to_csv(train_data_path, index = False)
-    test.to_csv(test_data_path, index = False)
+    train.to_csv(raw_train_data_path, index = False)
+    test.to_csv(raw_test_data_path, index = False)
 
     print(f"""Train data saved to: {train_data_path}
 Test data saved to: {test_data_path}

@@ -13,8 +13,9 @@ original_data/ipl_dataset.csv
 # Ignore Word temp files
 ~WRL*.tmp
 
-
-
 # Python cache / compiled files
 __pycache__/
 *.pyc
+
+# Experimenting python files
+delete.ipynb

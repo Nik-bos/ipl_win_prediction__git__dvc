@@ -1,6 +1,5 @@
 from read_data import read_yaml
 
-
 import pandas as pd
 import numpy as np
 import sklearn
@@ -150,22 +149,35 @@ def create_final_pipeline()-> Pipeline:
 # Saving pipeline and preprocessed data
 def save_pipeline_and_trans_data(config):
     yaml_data = read_yaml(config)
-    raw_dataset_path = yaml_data['load_data']['raw_dataset_path']
-    preprocessed_data_path = yaml_data['split_data']['trans_data_path']
+    raw_train_dataset_path = yaml_data['load_data']['raw_train_data']
+    raw_test_dataset_path = yaml_data['load_data']['raw_test_data']
+
+    preprocessed_train_data_path = yaml_data['split_data']['train_data_path']
+    preprocessed_test_data_path = yaml_data['split_data']['test_data_path']
+
     pipeline_path = yaml_data['pipeline']['pipeline_path']
 
-    df_raw = read_raw_csv(raw_dataset_path)
+    df_raw_train = read_raw_csv(raw_train_dataset_path)
+    df_raw_test = read_raw_csv(raw_test_dataset_path)
+
     # print(df_raw.columns)
     final_pipeline = create_final_pipeline()
 
-    trans_df = final_pipeline.fit_transform(df_raw)
+    train_trans = final_pipeline.fit_transform(df_raw_train)
+    test_trans = final_pipeline.transform(df_raw_test)
+
+    print("Data transformed.")
+
 
     joblib.dump(final_pipeline, pipeline_path)
     print(f"Preprocessor pipeline saved to-> {pipeline_path}")
 
     # Saving transformed data
-    trans_df.to_csv(preprocessed_data_path, index = False)
-    print(f"Transformed data saved to-> {preprocessed_data_path}")
+    train_trans.to_csv(preprocessed_train_data_path, index = False)
+    test_trans.to_csv(preprocessed_test_data_path, index = False)
+
+    print(f"Transformed train data saved to-> {preprocessed_train_data_path}")
+    print(f"Transformed test data saved to-> {preprocessed_test_data_path}")
 
 
 #==================================================

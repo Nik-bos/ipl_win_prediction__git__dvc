@@ -1,39 +1,41 @@
 base:
-    project_name: ipl_win_prediction_using_git_dvc    # Project name
-    random_state: 1    # Random state
-    target_column: results    # Target column
-    active_model: RandomForestClassifier
+  project_name: ipl_win_prediction_using_git_dvc      # Project name
+  random_state: 1      # Random state
+  target_column: results      # Target column
+  active_model: RandomForestClassifier
 
 data_source:
-    original_data_path: original_data/ipl_dataset.csv
+  original_data_path: original_data/ipl_dataset.csv
 
 load_data:
-    raw_dataset_path: data/raw/raw_ipl_dataset.csv
+  raw_dataset_path: data/raw/raw_ipl_dataset.csv
+  raw_train_data: data/raw/ipl_train.csv
+  raw_test_data: data/raw/ipl_test.csv
+
 
 pipeline:
-    pipeline_path: data/processed/ipl_preprocessor_pipeline.pkl
+  pipeline_path: data/processed/ipl_preprocessor_pipeline.pkl
 
 split_data:
-    trans_data_path: data/processed/ipl_preprocessed.csv
-    train_data_path: data/processed/ipl_train.csv
-    test_data_path: data/processed/ipl_test.csv
-    test_size: 0.2
+  train_data_path: data/processed/ipl_train_trans.csv
+  test_data_path: data/processed/ipl_test_trans.csv
+  test_size: 0.2
 
-model_path:
-    models
+model_path: models
 
 
 models:
-    RandomForestClassifier:
-        parameters:
-            n_estimators: 200
-    
-    DecisionTreeClassifier:
+  RandomForestClassifier:
+    parameters:
+      n_estimators: 200
+
+  DecisionTreeClassifier:
+    parameters: {}
 
 reports:
     # Path to save evaluation metrics
-    model_scores_path: reports/model_scores.json
+  model_scores_path: reports/model_scores.json
     # confusion matrix path
-    conf_matrix_path: reports/conf_matrix.csv
+  conf_matrix_path: reports/conf_matrix.csv
     # Model parameters path
-    model_parameters_path: reports/model_parameters.json
+  model_parameters_path: reports/model_parameters.json

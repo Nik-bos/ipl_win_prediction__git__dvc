@@ -23,71 +23,80 @@ stages:
   preprocess_data:
     cmd: python src/preprocess.py --config params.yaml
     deps:
+    - path: data/raw/ipl_test.csv
+      hash: md5
+      md5: 6bd720e1a8b12c9e716606248685ce2a
+      size: 1516132
+    - path: data/raw/ipl_train.csv
+      hash: md5
+      md5: c5d4554ae85d2d7dcb777adb13532a2a
+      size: 6069066
+    - path: src/preprocess.py
+      hash: md5
+      md5: 37a761ab38c1929370a5f2ed9f463c29
+      size: 6200
+    params:
+      params.yaml:
+        pipeline.pipeline_path: data/processed/ipl_preprocessor_pipeline.pkl
+        split_data.test_data_path: data/processed/ipl_test_trans.csv
+        split_data.train_data_path: data/processed/ipl_train_trans.csv
+    outs:
+    - path: data/processed/ipl_preprocessor_pipeline.pkl
+      hash: md5
+      md5: f217ffb05b60f0bc24b863b0182a06d3
+      size: 8858
+    - path: data/processed/ipl_test_trans.csv
+      hash: md5
+      md5: bf82ef6b7939d3385dc8250f450865f0
+      size: 5923776
+    - path: data/processed/ipl_train_trans.csv
+      hash: md5
+      md5: 377c2cd816090afad877ba6b17d586e5
+      size: 23717970
+  train_test_split:
+    cmd: python src/train_test_split.py --config params.yaml
+    deps:
     - path: data/raw/raw_ipl_dataset.csv
       hash: md5
       md5: 69fa7c201df87246ac54137e64d62e38
       size: 7585099
-    - path: src/preprocess.py
-      hash: md5
-      md5: d1abc7ef3fd10d67ddc322a24663f27d
-      size: 5704
-    params:
-      params.yaml:
-        pipeline.pipeline_path: data/processed/ipl_preprocessor_pipeline.pkl
-        split_data.trans_data_path: data/processed/ipl_preprocessed.csv
-    outs:
-    - path: data/processed/ipl_preprocessed.csv
-      hash: md5
-      md5: 0e9d9f353298c2fc97fad0f2f18b2e2f
-      size: 29647575
-    - path: data/processed/ipl_preprocessor_pipeline.pkl
-      hash: md5
-      md5: e69acb6fff4312cb87a95f629ccfd912
-      size: 8858
-  train_test_split:
-    cmd: python src/train_test_split.py --config params.yaml
-    deps:
-    - path: data/processed/ipl_preprocessed.csv
-      hash: md5
-      md5: 0e9d9f353298c2fc97fad0f2f18b2e2f
-      size: 29647575
     - path: src/read_data.py
       hash: md5
       md5: 53ce203dd337e117104cdf9e7c4e9448
       size: 1016
     - path: src/train_test_split.py
       hash: md5
-      md5: 6dffbae80402a06922bfce4e9cbbe026
-      size: 1891
+      md5: a08a519ed100e5a1942fe01fa9f55b43
+      size: 1999
     params:
       params.yaml:
         base.random_state: 1
         base.target_column: results
         split_data.test_size: 0.2
     outs:
-    - path: data/processed/ipl_test.csv
+    - path: data/raw/ipl_test.csv
       hash: md5
-      md5: da165b470592f09ceba513351ef6c4f3
-      size: 5888173
-    - path: data/processed/ipl_train.csv
+      md5: 6bd720e1a8b12c9e716606248685ce2a
+      size: 1516132
+    - path: data/raw/ipl_train.csv
       hash: md5
-      md5: 93338b91a2f329c52ff19c062dcfda99
-      size: 23549288
+      md5: c5d4554ae85d2d7dcb777adb13532a2a
+      size: 6069066
   train_and_evaluate:
     cmd: python src/train_and_evaluate.py --config params.yaml
     deps:
-    - path: data/processed/ipl_test.csv
+    - path: data/processed/ipl_test_trans.csv
       hash: md5
-      md5: da165b470592f09ceba513351ef6c4f3
-      size: 5888173
-    - path: data/processed/ipl_train.csv
+      md5: bf82ef6b7939d3385dc8250f450865f0
+      size: 5923776
+    - path: data/processed/ipl_train_trans.csv
       hash: md5
-      md5: 93338b91a2f329c52ff19c062dcfda99
-      size: 23549288
+      md5: 377c2cd816090afad877ba6b17d586e5
+      size: 23717970
     - path: src/train_and_evaluate.py
       hash: md5
-      md5: 2b9f0661b53f4167d4b429b949901ffb
-      size: 6870
+      md5: 17b5381a07e150c4f3326e5a6472c25d
+      size: 6917
     params:
       params.yaml:
         base.active_model: RandomForestClassifier
@@ -96,20 +105,21 @@ stages:
             parameters:
               n_estimators: 200
           DecisionTreeClassifier:
+            parameters: {}
     outs:
     - path: models/model.joblib
       hash: md5
-      md5: 4456ab5649ab8adae85d810e2cc20918
-      size: 87918553
+      md5: 76d619587a1aea3fc231bae7486f595e
+      size: 103089449
     - path: reports/conf_matrix.csv
       hash: md5
-      md5: 88f10df5c942f019280b220105bb6517
-      size: 61
+      md5: a0b7c702d57336bfe51193a31e3a2e0f
+      size: 62
     - path: reports/model_parameters.json
       hash: md5
-      md5: b27d233253c192891e7ca856c155c358
-      size: 665
+      md5: d8ffdb093c623e8f48ea7c520e57a79e
+      size: 671
     - path: reports/model_scores.json
       hash: md5
-      md5: 60cfcda73b53d14d15b4c979709bcb3d
-      size: 451
+      md5: 3007bcac0e8c8100d14e5baf4092dbee
+      size: 453

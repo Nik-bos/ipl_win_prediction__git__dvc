@@ -8,38 +8,44 @@ stages:
         outs:
             - data/raw/raw_ipl_dataset.csv
 
-    preprocess_data:
-        cmd: python src/preprocess.py --config params.yaml
-        deps:
-        - src/preprocess.py
-        - data/raw/raw_ipl_dataset.csv
-        outs:
-        - data/processed/ipl_preprocessor_pipeline.pkl
-        - data/processed/ipl_preprocessed.csv
-        params:
-            - pipeline.pipeline_path
-            - split_data.trans_data_path
-
     train_test_split:
         cmd: python src/train_test_split.py --config params.yaml
         deps:
             - src/train_test_split.py
             - src/read_data.py
-            - data/processed/ipl_preprocessed.csv
+            - data/raw/raw_ipl_dataset.csv
         outs:
-            - data/processed/ipl_train.csv
-            - data/processed/ipl_test.csv
+            - data/raw/ipl_train.csv
+            - data/raw/ipl_test.csv
         params:
             - split_data.test_size
             - base.target_column
             - base.random_state
 
+
+    preprocess_data:
+        cmd: python src/preprocess.py --config params.yaml
+        deps:
+        - src/preprocess.py
+        - data/raw/ipl_train.csv
+        - data/raw/ipl_test.csv
+
+        outs:
+        - data/processed/ipl_preprocessor_pipeline.pkl
+        - data/processed/ipl_train_trans.csv
+        - data/processed/ipl_test_trans.csv
+
+        params:
+            - pipeline.pipeline_path
+            - split_data.train_data_path
+            - split_data.test_data_path
+
     train_and_evaluate:
         cmd: python src/train_and_evaluate.py --config params.yaml
         deps:
             - src/train_and_evaluate.py
-            - data/processed/ipl_train.csv
-            - data/processed/ipl_test.csv
+            - data/processed/ipl_train_trans.csv
+            - data/processed/ipl_test_trans.csv
         params:
             - base.active_model
             - models
@@ -50,5 +56,8 @@ stages:
                 cache: false
             - reports/model_scores.json:
                 cache: false
+            #- reports/conf_matrix.csv:
+                #cache: false
+        plots:
             - reports/conf_matrix.csv:
-                cache: false
+                template: confusion
